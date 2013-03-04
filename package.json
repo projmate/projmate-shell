@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "",
-  "author": "",
+  "author": "Mario Gutierrez <mario@projmate.com>",
   "license": "MIT",
   "dependencies": {
     "shelljs": "~0.1.2",

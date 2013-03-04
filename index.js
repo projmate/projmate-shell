@@ -77,7 +77,7 @@ Shell.__defineGetter__('runner', function() {
  */
 Shell.node = function(args, cb) {
   var runner = new Runner();
-  runner.node(cmd, args);
+  runner.node(args);
   runner.start(cb);
 }
 
@@ -87,7 +87,7 @@ Shell.node = function(args, cb) {
  */
 Shell.coffee = function(args, cb) {
   var runner = new Runner();
-  runner.coffee(cmd, args);
+  runner.coffee(args);
   runner.start(cb);
 }
 
