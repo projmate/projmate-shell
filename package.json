@@ -1,6 +1,6 @@
 {
   "name": "projmate-shell",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ShellJS Extended",
   "main": "index.js",
   "scripts": {

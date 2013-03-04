@@ -6,7 +6,7 @@
 
 var async = require('async');
 var cp = require('child_process');
-var isWindows = ~require('os').platform().indexOf('win');
+var isWindows = require('os').platform().indexOf('win') == 0;
 var Path = require('path');
 var Fs = require('fs');
 
