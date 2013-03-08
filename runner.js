@@ -68,10 +68,12 @@ var coffee = Runner.nmbin('coffee');
  * @param {Function} cb
  */
 Runner.prototype.add = Runner.prototype.run = function(cmd, args, cb) {
+  if (!args) args = [];
   if (typeof args === 'function') {
     cb = args;
     args = [];
   }
+
   // spawn expects as an array for args, and this library allows single arg
   if (!Array.isArray(args)) args = [args];
 
