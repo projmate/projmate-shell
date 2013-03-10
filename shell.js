@@ -7,6 +7,7 @@
 var cp = require('child_process');
 var __slice = [].slice;
 var shelljs = require('shelljs');
+var Fs = require('fs');
 var Path = require('path');
 var Runner= require('./runner');
 
@@ -26,7 +27,7 @@ function delta(start, stop) {
     seconds: d.getSeconds(),
     milliseconds: d.getMilliseconds()
   }
-}
+};
 
 
 /**
@@ -89,7 +90,7 @@ Shell.coffee = function(args, cb) {
   var runner = new Runner();
   runner.coffee(args);
   runner.start(cb);
-}
+};
 
 
 /**
@@ -101,7 +102,6 @@ Shell.coffee = function(args, cb) {
 var dirs = [];
 Shell.inside = function(dirname, cb) {
   dirs.push(process.cwd());
-
   process.chdir(dirname);
   if (cb.length === 1) {
     cb(function() {
@@ -111,7 +111,22 @@ Shell.inside = function(dirname, cb) {
     cb();
     process.chdir(dirs.pop());
   }
-}
+};
+
+
+/**
+ * Determines if target is older than reference.
+ *
+ * @param {String} target The target file.
+ * @param {String} reference The file to compare against.
+ */
+Shell.outdated = function(target, reference) {
+  if (!Fs.existsSync(target)) return false;
+  if (!Fs.existsSync(reference)) return false;
+  var referenceStat = Fs.statSync(reference)
+  var targetStat = Fs.statSync(target)
+  return referenceStat.mtime.getTime() > targetStat.mtime.getTime();
+};
 
 
 /**
