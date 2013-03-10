@@ -93,7 +93,10 @@ Shell.coffee = function(args, cb) {
 
 
 /**
- * Runs operatios within a directory.
+ * Runs operations within a directory.
+ *
+ * @param {String} dirname The directory to change into.
+ * @param {Function} cb
  */
 var dirs = [];
 Shell.inside = function(dirname, cb) {
@@ -112,7 +115,7 @@ Shell.inside = function(dirname, cb) {
 
 
 /**
- * Gets the node_module/.bin/SCRIPT path on unix or Windows
+ * Gets the node_modules/.bin/SCRIPT path on unix or Windows
  */
 Shell.nmbin = Runner.nmbin;
 
