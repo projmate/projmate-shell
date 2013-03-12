@@ -6,10 +6,11 @@
 
 var async = require('async');
 var cp = require('child_process');
-var isWindows = require('os').platform().indexOf('win') == 0;
 var Path = require('path');
 var Fs = require('fs');
-
+var Utils = require('./utils');
+var coffee = Utils.which('coffee');
+var isWindows = Utils.isWindows;
 
 /**
  * Executes one or more shell commmands in a series.
@@ -32,32 +33,6 @@ function Runner() {
   return this;
 }
 
-
-/**
- * Gets the node_modules executable depending on the platform.
- *
- * @param {String} script Name of script, e.g. 'coffee'
- * @returns The full path to script.
- */
-var nmcache = {};
-Runner.nmbin = function(script) {
-  var path = nmcache[script];
-  if (path) return path;
-
-  path = Path.join(process.cwd(), 'node_modules/.bin/'+script);
-  if (Fs.existsSync(path)) {
-    if (isWindows)
-      path += '.cmd';
-    nmcache[script] = path;
-    return path;
-  }
-  path = Path.join(__dirname, 'node_modules/.bin/'+script);
-  if (isWindows)
-    path += '.cmd';
-  nmcache[script] = path;
-  return path;
-};
-var coffee = Runner.nmbin('coffee');
 
 /**
  * Enqueues a command which is later executed as part of a series

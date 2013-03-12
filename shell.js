@@ -4,16 +4,18 @@
  * See the file LICENSE for copying permission.
  */
 
-var cp = require('child_process');
 var __slice = [].slice;
 var shelljs = require('shelljs');
 var Fs = require('fs');
 var Path = require('path');
 var Runner= require('./runner');
+var _ = require('lodash');
+var Utils = require('./utils');
 
 var Shell = {
   __proto__: shelljs
 };
+_.extend(Shell, Utils);
 
 
 /**
@@ -34,13 +36,10 @@ function delta(start, stop) {
  * Times a node script.
  */
 Shell.timeNode = function(args, cb) {
-  if (!Array.isArray(args)) args = [args];
-
   var start = new Date();
-  var cmd = cp.spawn('node', args, {stdio: 'inherit'});
-  cmd.on('exit', function() {
+  Shell.node(args, function() {
     var d =  delta(start, new Date());
-    var s = "";
+    var s = '';
     if (d.minutes) s += d.minutes + ' m ';
     s += d.seconds + '.' + d.milliseconds + ' s';
     console.log('Time taken: ' + s);
@@ -63,7 +62,7 @@ Shell.run = function(cmd, args, cb)  {
  * Runs a series of commands.
  *
  * @example
- *  Shell.runner
+ *  $.runner
  *    .add('node', ['a.js'])
  *    .add('node', ['b.js'])
  *    .start(callback);
@@ -75,6 +74,10 @@ Shell.__defineGetter__('runner', function() {
 
 /**
  * Executes a nodeJS script.
+ *
+ * @example
+ *   To run node script
+ *     $.node('server/app.js --port 20101');
  */
 Shell.node = function(args, cb) {
   var runner = new Runner();
@@ -85,6 +88,13 @@ Shell.node = function(args, cb) {
 
 /**
  * Runs a CoffeeScript script.
+ *
+ * @example
+ *   To build scripts
+ *     $.coffee('-c -o build src');
+ *
+ *   To run a script
+ *     $.coffee('src/app.coffee');
  */
 Shell.coffee = function(args, cb) {
   var runner = new Runner();
@@ -98,6 +108,12 @@ Shell.coffee = function(args, cb) {
  *
  * @param {String} dirname The directory to change into.
  * @param {Function} cb
+ *
+ * @example
+ *   To update a git repo
+ *     $.inside('my-project', function() {
+ *       $.exec('git pull origin master');
+ *     });
  */
 var dirs = [];
 Shell.inside = function(dirname, cb) {
@@ -115,23 +131,17 @@ Shell.inside = function(dirname, cb) {
 
 
 /**
- * Determines if target is older than reference.
- *
- * @param {String} target The target file.
- * @param {String} reference The file to compare against.
- */
-Shell.outdated = function(target, reference) {
-  if (!Fs.existsSync(target)) return false;
-  if (!Fs.existsSync(reference)) return false;
-  var referenceStat = Fs.statSync(reference)
-  var targetStat = Fs.statSync(target)
-  return referenceStat.mtime.getTime() > targetStat.mtime.getTime();
-};
-
-
-/**
  * Gets the node_modules/.bin/SCRIPT path on unix or Windows
  */
-Shell.nmbin = Runner.nmbin;
+Shell.nmbin = function(executable) {
+  console.log('Deprecated - use `which` instead')
+  return Utils.which(executable);
+}
+
+
+Shell.cp_rf = _.partial(Shell.cp, "-rf");
+Shell.cp_f = _.partial(Shell.cp, "-f");
+Shell.mkdir_p = _.partial(Shell.mkdir, "-p");
+Shell.rm_rf = _.partial(Shell.rm, "-rf");
 
 module.exports = Shell;
