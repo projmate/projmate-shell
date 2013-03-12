@@ -4,4 +4,4 @@
  * See the file LICENSE for copying permission.
  */
 
-module.exports = require('./shell');
+module.exports = require('./lib/shell');
