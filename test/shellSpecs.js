@@ -8,16 +8,17 @@ var assert = require('chai').assert;
 var $ = require('..');
 
 describe('Shell', function() {
-  it('should compare two files for outdated', function() {
-    var newer = __dirname + '/../lib/shell.js';
-    var older = __dirname + '/../LICENSE';
-    var missing = __dirname + '/../doesnotexist';
-    assert.isFalse($.outdated(newer, older));
-    assert.isTrue($.outdated(older, newer));
-    assert.isFalse($.outdated(newer, missing));
-    assert.isFalse($.outdated(missing, older));
+  describe('outdated', function() {
+    it('should compare two files for outdated', function() {
+      var newer = __dirname + '/../lib/shell.js';
+      var older = __dirname + '/../LICENSE';
+      var missing = __dirname + '/../doesnotexist';
+      assert.isFalse($.outdated(newer, older));
+      assert.isTrue($.outdated(older, newer));
+      assert.isFalse($.outdated(newer, missing));
+      assert.isFalse($.outdated(missing, older));
+    });
   });
-
 
   describe('wget', function() {
     it('should download file', function(done) {

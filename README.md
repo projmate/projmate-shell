@@ -1,12 +1,16 @@
 # projmate-shell
 
-Helpers to simplify Node.js scriptingand within projmate Projfiles specifically.
+Cross-platform shell utiliites. It's the `$` in Projfiles.
 
 ## Examples
 
 Require it
 
     var $ = require('projmate-shell');
+
+Shell extends [ShellJS](https://github.com/arturadib/shelljs)
+
+    $.cp('-rf', 'client/css', 'public/css');
 
 To run single command
 
@@ -20,18 +24,15 @@ To run multiple node and CoffeeScript scripts
       .coffee('other.coffee')           # uses local coffee if it exists
       .start(cb);
 
-Shell shares prototype with [ShellJS](https://github.com/arturadib/shelljs)
-
-    $.cp('-rf', 'client/css', 'public/css');
-
-## New Methods
+## Methods Added
 
 Name        | Description                       | Example
-------------|-----------------------------------|---------
+------------|-----------------------------------|---------------------------------------------------------------------
 coffee      | Runs a CoffeeScript script        | `$.coffee('hello.coffee')`
 inside      | Run operations within a directory | `$.inside('build', function(){})`
-node        | Runs a node script                | `$.node('hello.coffee')`
+node        | Runs a node script                | `$.node('hello.js')`
 open        | Opens a document                  | `$.open('index.html')`
+outdated    | Tests if arg1 older than arg2     | `$.outdated(file, againstFile)`
 run         | Runs a single command             | `$.run('cat test.js test1.js')`
 runner      | Chain sequence of commands        | `$.runner.run('echo $PATH').node('script.js').start()`
 wget        | Downloads a file                  | `$.wget('http://github.com', 'index.html')`

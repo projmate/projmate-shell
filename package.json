@@ -15,7 +15,8 @@
     "coffee-script": "~1.6.2",
     "lodash": "~1.0.1",
     "request": "~2.16.6",
-    "progress": "~0.1.0"
+    "progress": "~0.1.0",
+    "tar.gz": "~0.1.1"
   },
   "devDependencies": {
     "mocha": "~1.8.2",
