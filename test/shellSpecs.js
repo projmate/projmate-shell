@@ -5,17 +5,35 @@
  */
 
 var assert = require('chai').assert;
-var sh = require('..');
+var $ = require('..');
 
 describe('Shell', function() {
   it('should compare two files for outdated', function() {
     var newer = __dirname + '/../lib/shell.js';
     var older = __dirname + '/../LICENSE';
     var missing = __dirname + '/../doesnotexist';
-    assert.isFalse(sh.outdated(newer, older));
-    assert.isTrue(sh.outdated(older, newer));
-    assert.isFalse(sh.outdated(newer, missing));
-    assert.isFalse(sh.outdated(missing, older));
+    assert.isFalse($.outdated(newer, older));
+    assert.isTrue($.outdated(older, newer));
+    assert.isFalse($.outdated(newer, missing));
+    assert.isFalse($.outdated(missing, older));
+  });
+
+
+  describe('wget', function() {
+    it('should download file', function(done) {
+      this.timeout(4000);
+      var output = __dirname+'/tmp/wget-file';
+
+      $.wget(
+        'https://raw.github.com/projmate/projmate-shell/master/README.md',
+        output, function(err) {
+          assert.ifError(err);
+          assert.isTrue($.test('-f', output));
+          $.rm(output);
+          done();
+        }
+      );
+    });
   });
 });
 

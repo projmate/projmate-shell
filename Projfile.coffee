@@ -26,3 +26,9 @@ exports.project = (pm) ->
         f.writeFile
       ]
 
+    tests:
+      files: "test/*Specs.js"
+      dev: [
+        f.mocha
+      ]
+
