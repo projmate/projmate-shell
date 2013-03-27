@@ -26,12 +26,16 @@ Shell shares prototype with [ShellJS](https://github.com/arturadib/shelljs)
 
 ## New Methods
 
-Name | Description | Example
------|-------------|---------
-inside | Run operations within a directory | `$.inside('build', function(){})`
-open | Opens a document | `$.open('index.html')`
-run | Runs a single command | `$.run('cat test.js test1.js')`
-which | Enhanced which which searches node_modules | `$.which('coffee')`
+Name        | Description                       | Example
+------------|-----------------------------------|---------
+coffee      | Runs a CoffeeScript script        | `$.coffee('hello.coffee')`
+inside      | Run operations within a directory | `$.inside('build', function(){})`
+node        | Runs a node script                | `$.node('hello.coffee')`
+open        | Opens a document                  | `$.open('index.html')`
+run         | Runs a single command             | `$.run('cat test.js test1.js')`
+runner      | Chain sequence of commands        | `$.runner.run('echo $PATH').node('script.js').start()`
+wget        | Downloads a file                  | `$.wget('http://github.com', 'index.html')`
+which       | Finds exe in [node_modules, path] | `$.which('coffee')`
 
 
 ## License
