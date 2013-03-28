@@ -36,5 +36,68 @@ describe('Shell', function() {
       );
     });
   });
+
+
+  describe('unpack', function() {
+    it('should unarchive zip', function(done) {
+      var filename = 'lib.zip';
+      var archive = __dirname+'/'+filename;
+      var outputDir = __dirname+'/tmp/'+filename;
+
+      $.unpack(archive, outputDir, function(err) {
+        assert.ifError(err);
+        assert.isTrue($.test('-d', outputDir));
+        var shell = require(outputDir+'/lib/shell');
+        assert.equal(shell.HOME, $.HOME);
+        done();
+      });
+
+    });
+
+    it('should unarchive tar', function(done) {
+      var filename = 'lib.tar';
+      var archive = __dirname+'/'+filename;
+      var outputDir = __dirname+'/tmp/'+filename;
+
+      $.unpack(archive, outputDir, function(err) {
+        assert.ifError(err);
+        assert.isTrue($.test('-d', outputDir));
+        var shell = require(outputDir+'/lib/shell');
+        assert.equal(shell.HOME, $.HOME);
+        done();
+      });
+    });
+
+    it('should unarchive tar.gz', function(done) {
+      var filename = 'lib.tar.gz';
+      var archive = __dirname+'/'+filename;
+      var outputDir = __dirname+'/tmp/'+filename;
+
+      $.unpack(archive, outputDir, function(err) {
+        assert.ifError(err);
+        assert.isTrue($.test('-d', outputDir));
+        var shell = require(outputDir+'/lib/shell');
+        assert.equal(shell.HOME, $.HOME);
+        done();
+      });
+    });
+
+    it('should unarchive tar.gz', function(done) {
+      var filename = 'lib.tar.gz';
+      var archive = __dirname+'/'+filename;
+      var outputDir = __dirname+'/tmp/'+filename;
+
+      $.unpack(archive, outputDir, function(err) {
+        assert.ifError(err);
+        assert.isTrue($.test('-d', outputDir));
+        var shell = require(outputDir+'/lib/shell');
+        assert.equal(shell.HOME, $.HOME);
+        done();
+      });
+    });
+  });
+
+
+
 });
 
