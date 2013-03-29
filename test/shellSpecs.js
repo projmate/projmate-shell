@@ -6,8 +6,10 @@
 
 var assert = require('chai').assert;
 var $ = require('..');
+var Fs = require('fs');
 
 describe('Shell', function() {
+
   describe('outdated', function() {
     it('should compare two files for outdated', function() {
       var newer = __dirname + '/../lib/shell.js';
@@ -18,7 +20,8 @@ describe('Shell', function() {
       assert.isFalse($.outdated(newer, missing));
       assert.isFalse($.outdated(missing, older));
     });
-  });
+  }); // outdated
+
 
   describe('wget', function() {
     it('should download file', function(done) {
@@ -35,7 +38,7 @@ describe('Shell', function() {
         }
       );
     });
-  });
+  }); // wget
 
 
   describe('unpack', function() {
@@ -95,9 +98,20 @@ describe('Shell', function() {
         done();
       });
     });
+  }); // unpack
+
+
+  describe('runner', function() {
+    var filename1= __dirname+'/tmp/touch1.txt';
+    var filename2 = __dirname+'/tmp/touch2.txt';
+    it('should chain', function(done) {
+      $ .run('touch', filename1)
+        .run('touch', filename2, function(err) {
+          assert.isTrue($.test('-f', filename1));
+          assert.isTrue($.test('-f', filename2));
+          done();
+        });
+    });
   });
-
-
-
 });
 
