@@ -7,28 +7,29 @@ exports.project = (pm) ->
   f = pm.filters()
   $ = pm.shell()
 
-  pm.registerTasks
-    dist:
-      pre: ["addCopyright"]
+  # ==== Tasks
 
-    addCopyright:
-      desc: "Adds copyright to files"
-      files: [
-        "lib/**/*js"
-        "test/**/*js"
-        "index.js"
-        "Projfile.coffee"
-      ]
+  dist:
+    pre: ["addCopyright"]
 
-      development: [
-        f.addHeader(filename: "doc/copyright.js", $if: {extname: ".js"})
-        f.addHeader(filename: "doc/copyright.coffee", $if: {extname: ".coffee"})
-        f.writeFile
-      ]
+  addCopyright:
+    desc: "Adds copyright to files"
+    files: [
+      "lib/**/*js"
+      "test/**/*js"
+      "index.js"
+      "Projfile.coffee"
+    ]
 
-    tests:
-      files: "test/*Specs.js"
-      dev: [
-        f.mocha
-      ]
+    development: [
+      f.addHeader(filename: "doc/copyright.js", $if: {extname: ".js"})
+      f.addHeader(filename: "doc/copyright.coffee", $if: {extname: ".coffee"})
+      f.writeFile
+    ]
+
+  tests:
+    files: "test/*Specs.js"
+    dev: [
+      f.mocha
+    ]
 

@@ -53,6 +53,7 @@ describe('Shell', function() {
         var shell = require(outputDir+'/lib/shell');
         assert.equal(shell.HOME, $.HOME);
         done();
+        console.log('here4');
       });
 
     });
