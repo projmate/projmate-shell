@@ -3,8 +3,10 @@
  *
  * See the file LICENSE for copying permission.
  */
-
-var assert = require('chai').assert;
+var chai = require('chai');
+var Assertion = chai.Assertion;
+Assertion.includeStackTrace = true;
+var assert = chai.assert;
 var $ = require('..');
 var Fs = require('fs');
 
@@ -26,17 +28,26 @@ describe('Shell', function() {
   describe('wget', function() {
     it('should download file', function(done) {
       this.timeout(4000);
-      var output = __dirname+'/tmp/wget-file';
 
-      $.wget(
-        'https://raw.github.com/projmate/projmate-shell/master/README.md',
-        output, function(err) {
-          assert.ifError(err);
-          assert.isTrue($.test('-f', output));
-          $.rm(output);
-          done();
-        }
-      );
+      var map = {};
+      var readme = __dirname+'/tmp/wget-file';
+      var index = __dirname+'/tmp/index';
+      map[readme] = 'https://raw.github.com/projmate/projmate-shell/master/README.md';
+      map[index] = 'https://raw.github.com/projmate/projmate-shell/master/index.js';
+
+      $.wget(map)
+      .then(function() {
+        assert.isTrue($.test('-f', readme));
+        assert.isTrue(Fs.readFileSync(readme, 'utf8').indexOf('projmate-shell') > 0);
+        assert.isTrue($.test('-f', index));
+        assert.isTrue(Fs.readFileSync(index, 'utf8').indexOf('exports') > 0);
+        $.rm(readme);
+        $.rm(index);
+        done();
+      })
+      .fail(function(err) {
+        done(err);
+      });
     });
   }); // wget
 
@@ -53,7 +64,6 @@ describe('Shell', function() {
         var shell = require(outputDir+'/lib/shell');
         assert.equal(shell.HOME, $.HOME);
         done();
-        console.log('here4');
       });
 
     });

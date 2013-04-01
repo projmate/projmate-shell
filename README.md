@@ -37,7 +37,7 @@ outdated    | Tests if arg1 older than arg2     | `$.outdated(file, againstFile)
 run         | Runs a single command             | `$.run('cat test.js test1.js')`
 runner      | Chain sequence of commands        | `$.runner.run('echo $PATH').node('script.js').start()`
 unpack      | Unpack (.tar|.tar.gz|.zip) archives| `$.unpack('archive.tgz', 'components', callback)`
-wget        | Downloads a file                  | `$.wget('http://github.com', 'index.html')`
+wget        | Downloads one or more files       | `$.wget({'index.html': 'http://github.com', 'index.html'})`
 which       | Finds exe in [node_modules, path] | `$.which('coffee')`
 
 
