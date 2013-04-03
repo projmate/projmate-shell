@@ -19,7 +19,7 @@
     "tar.gz": "~0.1.1",
     "unzip": "git://github.com/nearinfinity/node-unzip.git",
     "tar": "~0.1.17",
-    "vow": "~0.3.0"
+    "vow": "git://github.com/mgutz/jspromise.git"
   },
   "devDependencies": {
     "mocha": "~1.8.2",
