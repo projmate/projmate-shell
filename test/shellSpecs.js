@@ -1,3 +1,4 @@
+/* globals describe, it */
 /**
  * Copyright (c) 2013 Mario Gutierrez <mario@projmate.com>
  *
@@ -9,6 +10,7 @@
  *
  * See the file LICENSE for copying permission.
  */
+'use strict';
 var chai = require('chai');
 var Assertion = chai.Assertion;
 Assertion.includeStackTrace = true;
@@ -34,12 +36,14 @@ describe('Shell', function() {
   describe('wget', function() {
     it('should download file', function(done) {
       this.timeout(4000);
-
-      var map = {};
       var readme = __dirname+'/tmp/wget-file';
       var index = __dirname+'/tmp/index';
-      map[readme] = 'https://raw.github.com/projmate/projmate-shell/master/README.md';
-      map[index] = 'https://raw.github.com/projmate/projmate-shell/master/index.js';
+      var map = {
+        'https://raw.github.com/projmate/projmate-shell/master/README.md':
+          readme,
+        'https://raw.github.com/projmate/projmate-shell/master/index.js':
+          index
+      };
 
       $.wget(map)
       .then(function() {
@@ -123,7 +127,7 @@ describe('Shell', function() {
     var filename2 = __dirname+'/tmp/touch2.txt';
     it('should chain', function(done) {
       $ .run('touch', filename1)
-        .run('touch', filename2, function(err) {
+        .run('touch', filename2, function() {
           assert.isTrue($.test('-f', filename1));
           assert.isTrue($.test('-f', filename2));
           done();
